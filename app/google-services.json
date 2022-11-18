@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "251868624391",
+    "project_id": "chill-b056b",
+    "storage_bucket": "chill-b056b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:251868624391:android:6011a2390db361da799ca2",
+        "android_client_info": {
+          "package_name": "com.example.chill_watch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "251868624391-i630uo7tmdpo9tj18jrd53nrmjqp5t2c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyejUpZm6lqxRFN0hL98yQdlOpfkLBJuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "251868624391-i630uo7tmdpo9tj18jrd53nrmjqp5t2c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

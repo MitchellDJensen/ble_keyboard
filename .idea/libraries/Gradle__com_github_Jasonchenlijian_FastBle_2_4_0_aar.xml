@@ -3,8 +3,8 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/90a80291d3a8df0002462be2513f5d87/jetified-FastBle-2.4.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/02c5848da63d5ce6ca9b81456c3bc35a/jetified-FastBle-2.4.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1b048c3f13855e5e014492025b14f643/jetified-FastBle-2.4.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1b048c3f13855e5e014492025b14f643/jetified-FastBle-2.4.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6683e40d3d05b837c9ade64d884e07c9/transformed/jetified-FastBle-2.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6683e40d3d05b837c9ade64d884e07c9/transformed/jetified-FastBle-2.4.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

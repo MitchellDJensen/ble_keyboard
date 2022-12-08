@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ble_keyboard.iml" filepath="$PROJECT_DIR$/.idea/modules/ble_keyboard.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ble_keyboard.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ble_keyboard.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ble_keyboard.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ble_keyboard.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ble_keyboard.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ble_keyboard.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ble_keyboard.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ble_keyboard.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chill_watch.iml" filepath="$PROJECT_DIR$/.idea/modules/chill_watch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/chill_watch.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/chill_watch.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/chill_watch.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/chill_watch.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/chill_watch.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/chill_watch.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/chill_watch.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/chill_watch.app.unitTest.iml" />
     </modules>
   </component>
 </project>

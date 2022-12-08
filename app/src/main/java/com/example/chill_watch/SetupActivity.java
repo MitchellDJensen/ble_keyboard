@@ -25,8 +25,11 @@ import com.clj.fastble.callback.BleGattCallback;
 import com.clj.fastble.callback.BleNotifyCallback;
 import com.clj.fastble.callback.BleScanCallback;
 import com.clj.fastble.exception.BleException;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -40,23 +43,54 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SetupActivity extends AppCompatActivity {
+
+    private static final int BATCH_SIZE = 12;
 
     ImageButton home_button;
     ImageButton add_ble;
     ImageButton add_company;
+    ImageButton sign_in_button;
+    String company_name = "Test";
+    String account_username = "Test User";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Integer krabbyPatties = 0;
+    List<Map<String, Object>> batchList;
+
+    public String Username = "Test";
 
     final private int REQUEST_CODE_PERMISSION_LOCATION = 0;
     private AlertDialog.Builder dialogBuilder;
     private BleDeviceAdapter bleDeviceAdapter;
     private BleDevice activeBleDevice;
+    private TextView companyName;
+    private TextView signin_username;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setup_main);
+
+        Intent intent = getIntent();
+        String companyString = intent.getStringExtra("companyName");
+        companyName = findViewById(R.id.company_id);
+
+        String accountUsername = intent.getStringExtra("accountUsername");
+        signin_username = findViewById(R.id.signin_username);
+
+        if (accountUsername != null && !accountUsername.isEmpty()) {
+            signin_username.setText(accountUsername);
+            account_username = accountUsername;
+        }
+
+        if (companyString != null && !companyString.isEmpty()) {
+            companyName.setText(companyString);
+            company_name = companyString;
+        }
 
         bleDeviceAdapter = new BleDeviceAdapter(SetupActivity.this, android.R.layout.select_dialog_singlechoice);
 
@@ -96,7 +130,7 @@ public class SetupActivity extends AppCompatActivity {
         });
 
 
-
+        Username = getResources().getString(R.string.username);
 
         home_button = findViewById(R.id.home_icon_setup);
         home_button.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +139,24 @@ public class SetupActivity extends AppCompatActivity {
                 openHomePage();
             }
         });
+
+
+        add_company = findViewById(R.id.company_button);
+        add_company.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCompanyPage();
+            }
+        });
+
+        sign_in_button = findViewById(R.id.signin_button);
+        sign_in_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSignInPage();
+            }
+        });
+
 
         checkPermissions();
 
@@ -116,8 +168,25 @@ public class SetupActivity extends AppCompatActivity {
                 .setOperateTimeout(5000);
     }
 
+    public void onSignOut() {
+        FirebaseAuth.getInstance().signOut();
+    }
+
+    public void openCompanyPage() {
+        Intent intent = new Intent(this, CompanyActivity.class);
+        startActivity(intent);
+    }
+
     public void openHomePage() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(SetupActivity.this, HomeActivity.class);
+        intent.putExtra("accountUsername", account_username.toString());
+        intent.putExtra("companyName", company_name.toString());
+        intent.putExtra("krabbyPatties", krabbyPatties);
+        startActivity(intent);
+    }
+
+    public void openSignInPage() {
+        Intent intent = new Intent(this, SignIn.class);
         startActivity(intent);
     }
 
@@ -178,7 +247,14 @@ public class SetupActivity extends AppCompatActivity {
 
             @Override
             public void onScanFinished(List<BleDevice> scanResultList) {
-
+                for (BleDevice curDevice : scanResultList) {
+                    String name = curDevice.getName();
+                    String searchString = "HEM_";
+                    String subName = name.substring(0,searchString.length()-1);
+                    if (searchString != subName) {
+                        scanResultList.remove(curDevice);
+                    }
+                }
             }
         });
     }
@@ -197,6 +273,8 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onConnectSuccess(BleDevice bleDevice, BluetoothGatt gatt, int status) {
                 activeBleDevice = bleDevice;
+
+
 
                 Toast.makeText(SetupActivity.this, "Connected.", Toast.LENGTH_LONG).show();
 
@@ -232,19 +310,52 @@ public class SetupActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         //Toast.makeText(MainActivity.this, HexUtil.formatHexString(data, true), Toast.LENGTH_SHORT).show();
-                                        Toast.makeText(SetupActivity.this, new String(data), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SetupActivity.this, new String(data), Toast.LENGTH_LONG).show();
                                         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
                                         String output = new String(data);
                                         String[] values = output.split(" ");
-
+                                        String username = "TestUser";
                                         String id = Long.toString(System.currentTimeMillis());
                                         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
                                         if (values.length == 3) {
+                                            krabbyPatties++;
+
+                                            // Test App Store:
+
+                                            Map<String, Object> reading = new HashMap<>();
+                                            reading.put("Time", date);
+                                            reading.put("AmbientTemp", values[0]);
+                                            reading.put("SkinTemp", values[1]);
+                                            reading.put("Code", values[2]);
+                                            batchList.add(reading);
+                                            //db.collection("TestData").document(krabbyPatties.toString()).set(reading, SetOptions.merge());
+
+
+
+                                            // Real App Store:
+                                            /*
+                                            Map<String, Object> reading = new HashMap<>();
+                                            reading.put("Company", companyName);
+                                            reading.put("Time", date);
+                                            reading.put("AmbientTemp", values[0]);
+                                            reading.put("SkinTemp", values[1]);
+                                            reading.put("Code", values[2]);
+                                            batchList.add(reading);
+                                            db.collection("Users").document(account_username).set(reading, SetOptions.merge());
+                                            */
+
+                                            if (batchList.size() == BATCH_SIZE) {
+                                                sumbitBatch();
+                                            }
+
+                                            /*
                                             database.child("inputs").child(id).child("time").setValue(date);
                                             database.child("inputs").child(id).child("skin_temp").setValue(values[0]);
                                             database.child("inputs").child(id).child("ambient").setValue(values[1]);
                                             database.child("inputs").child(id).child("code").setValue(values[2]);
+
+                                             */
                                         }
 
                                     }
@@ -290,7 +401,7 @@ public class SetupActivity extends AppCompatActivity {
             return;
         }
 
-        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION};
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH};
         List<String> permissionDeniedList = new ArrayList<>();
         for (String permission : permissions) {
             int permissionCheck = ContextCompat.checkSelfPermission(this, permission);
@@ -300,7 +411,7 @@ public class SetupActivity extends AppCompatActivity {
                 permissionDeniedList.add(permission);
             }
         }
-        if (!permissionDeniedList.isEmpty()) {
+        if (permissionDeniedList != null && !permissionDeniedList.isEmpty()) {
             String[] deniedPermissions = permissionDeniedList.toArray(new String[permissionDeniedList.size()]);
             ActivityCompat.requestPermissions(this, deniedPermissions, REQUEST_CODE_PERMISSION_LOCATION);
         }
@@ -341,5 +452,22 @@ public class SetupActivity extends AppCompatActivity {
         if (locationManager == null)
             return false;
         return locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
+    }
+
+    public void sumbitBatch() {
+        for (Map<String, Object> curData : batchList) {
+            db.collection("TestData").document(krabbyPatties.toString()).set(curData, SetOptions.merge());
+            // db.collection("Users").document(account_username).set(curData, SetOptions.merge());
+        }
+        batchList.clear();
+    }
+
+    public class UserData {
+        public String AmbientTemp;
+        public String SkinTemp;
+        public String Code;
+        public String Time;
+        public String Company;
+        public int patty;
     }
 }

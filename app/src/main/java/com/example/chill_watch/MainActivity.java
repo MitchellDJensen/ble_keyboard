@@ -19,6 +19,7 @@ import com.clj.fastble.callback.BleScanCallback;
 import com.clj.fastble.data.BleDevice;
 import com.clj.fastble.exception.BleException;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,15 +35,96 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.welcome_main);
+
+        TextView welcome_message = findViewById(R.id.welcome_message);
+        String loadedMessage = "";
+
+        try {
+            loadedMessage = loadWelcomeMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (loadedMessage != null && !loadedMessage.isEmpty()) {
+            welcome_message.setText(loadedMessage);
+        }
+
+        Button go_to_home = findViewById(R.id.go_to_home);
+        go_to_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openHomePage();
+            }
+        });
+    }
+    public void openHomePage() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    public String loadWelcomeMessage() throws IOException {
+        // list that holds strings of a file
+        List<String> listOfStrings
+                = new ArrayList<String>();
+        String fileName = "welcomephrases.txt";
+        // load data from file
+        //int rID = getResources().getIdentifier("com.example.chill_watch:raw/"+fileName, null, null);
+        //get the file as a stream
+        //InputStream iS = getResources().openRawResource(rID);
+        //URL path = MainActivity.class.getResource("welcomphrases.txt");;
+        //File f = new File(path.getFile());
+        //reader = new BufferedReader(new FileReader(f));
+        //BufferedReader bf = new BufferedReader(
+                //new FileReader(f));
+        BufferedReader bf = new BufferedReader(
+                new InputStreamReader(getAssets().open("welcomephrases.txt")));
+
+        // read entire line as string
+        String line = bf.readLine();
+
+        // checking for end of file
+        while (line != null) {
+            listOfStrings.add(line);
+            line = bf.readLine();
+        }
+
+        // closing bufferreader object
+        bf.close();
+        Random rand = new Random();
+
+        int num;
+        num = rand.nextInt(listOfStrings.size() + 1);
+        return listOfStrings.get(num);
+    }
+
+
+    /*
     final private int REQUEST_CODE_PERMISSION_LOCATION = 0;
     private AlertDialog.Builder dialogBuilder;
     private BleDeviceAdapter bleDeviceAdapter;
@@ -113,6 +195,11 @@ public class MainActivity extends AppCompatActivity {
                 .setReConnectCount(1, 5000)
                 .setConnectOverTime(20000)
                 .setOperateTimeout(5000);
+    }
+
+    public void openSignIn() {
+        Intent intent = new Intent(this, SignIn.class);
+        startActivity(intent);
     }
 
     public void openHomePage() {
@@ -228,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
                                     public void run() {
                                         //Toast.makeText(MainActivity.this, HexUtil.formatHexString(data, true), Toast.LENGTH_SHORT).show();
                                         Toast.makeText(MainActivity.this, new String(data), Toast.LENGTH_SHORT).show();
+
                                         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
                                         String id = Long.toString(System.currentTimeMillis());
@@ -277,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION};
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH};
         List<String> permissionDeniedList = new ArrayList<>();
         for (String permission : permissions) {
             int permissionCheck = ContextCompat.checkSelfPermission(this, permission);
@@ -329,4 +417,6 @@ public class MainActivity extends AppCompatActivity {
             return false;
         return locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
     }
+
+     */
 }

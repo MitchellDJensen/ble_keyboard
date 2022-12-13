@@ -47,6 +47,8 @@ public class SignIn  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
 
+
+
         email = findViewById(R.id.username);
         password = findViewById(R.id.password);
         sign_in_button = findViewById(R.id.login);

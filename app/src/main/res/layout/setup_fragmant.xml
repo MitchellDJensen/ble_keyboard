@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="600dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:elevation="12dp"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:thicknessRatio="1.9"
+            app:cardCornerRadius="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/avatar_image"
+                android:layout_width="match_parent"
+                android:scaleType="fitCenter"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/ic_person"/>
+        </androidx.cardview.widget.CardView>
+
+        <ImageButton
+            android:id="@+id/signin_button"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="5dp"
+            android:background="#00FFFFFF"
+            android:contentDescription="Sign In"
+            android:src="@drawable/ic_person"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="@id/name_break"
+            app:layout_constraintBottom_toTopOf="@id/name_break"
+            app:tint="@color/purple_700">
+
+
+        </ImageButton>
+
+        <TextView
+            android:id="@+id/signin_username"
+            app:layout_constraintTop_toBottomOf="@id/avatar"
+            app:layout_constraintStart_toEndOf="@id/company_button"
+            android:layout_width="295dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="Sign In"
+            android:autoSizeTextType="uniform"
+            android:gravity="center|start"
+            />
+
+        <LinearLayout
+            android:id="@+id/name_break"
+            android:layout_width="375dp"
+            android:layout_height="8dp"
+            app:layout_constraintTop_toBottomOf="@id/signin_username"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/name_break_line"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/purple_700" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/company_button"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="5dp"
+            android:background="#00FFFFFF"
+            android:contentDescription="Add Company"
+            android:src="@drawable/ic_company"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="@id/name_break"
+            app:layout_constraintTop_toBottomOf="@id/name_break"
+            app:tint="@color/purple_700">
+
+
+        </ImageButton>
+        <TextView
+            android:id="@+id/company_id"
+            app:layout_constraintTop_toBottomOf="@id/name_break"
+            app:layout_constraintStart_toEndOf="@id/company_button"
+            android:layout_width="295dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="Company Id Here"
+            android:autoSizeTextType="uniform"
+            android:gravity="center|start"
+            />
+
+        <LinearLayout
+            android:id="@+id/company_break"
+            android:layout_width="375dp"
+            android:layout_height="8dp"
+            app:layout_constraintTop_toBottomOf="@id/company_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/company_break_line"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/purple_700" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/bluetooth_button"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="5dp"
+            android:background="#00FFFFFF"
+            android:contentDescription="Add Bluetooth Connection"
+            android:src="@drawable/ic_bluetooth_searching"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="@id/company_break"
+            app:layout_constraintTop_toBottomOf="@id/company_break"
+            app:tint="@color/purple_700">
+
+
+        </ImageButton>
+        <TextView
+            android:id="@+id/bluetooth_id"
+            app:layout_constraintTop_toBottomOf="@id/company_break"
+            app:layout_constraintStart_toEndOf="@id/bluetooth_button"
+            android:layout_width="295dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="Bluetooth Id Here"
+            android:autoSizeTextType="uniform"
+            android:gravity="center|start"
+            />
+
+        <LinearLayout
+            android:id="@+id/bluetooth_break"
+            android:layout_width="375dp"
+            android:layout_height="8dp"
+            app:layout_constraintTop_toBottomOf="@id/bluetooth_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/bluetooth_break_line"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/purple_700" />
+        </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

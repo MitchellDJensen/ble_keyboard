@@ -25,6 +25,7 @@ public class CompanyActivity extends AppCompatActivity {
 
     EditText company_name;
     EditText company_code;
+    String account_username;
     MaterialButton register_button;
     MaterialButton back_button;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -38,6 +39,13 @@ public class CompanyActivity extends AppCompatActivity {
         company_code = findViewById(R.id.company_code);
         register_button = findViewById(R.id.register);
         back_button = findViewById(R.id.company_back);
+
+        Intent intent = getIntent();
+        String accountUsername = intent.getStringExtra("accountUsername");
+
+        if (accountUsername != null && !accountUsername.isEmpty()) {
+            account_username = accountUsername;
+        }
 
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,15 +80,15 @@ public class CompanyActivity extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CompanyActivity.this, SetupActivity.class);
-                startActivity(intent);
+                addUserToCompany(null);
             }
         });
 
     }
     public void addUserToCompany(String companyId) {
         Intent intent = new Intent(CompanyActivity.this, SetupActivity.class);
-        intent.putExtra("companyString", companyId);
+        intent.putExtra("companyName", companyId);
+        intent.putExtra("accountUsername", account_username);
         startActivity(intent);
     }
 }

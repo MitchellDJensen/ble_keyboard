@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void openHomePage() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, SetupActivity.class);
         startActivity(intent);
     }
 
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         Random rand = new Random();
 
         int num;
-        num = rand.nextInt(listOfStrings.size() + 1);
+        num = rand.nextInt(listOfStrings.size());
         return listOfStrings.get(num);
     }
 
